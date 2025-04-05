@@ -5,15 +5,12 @@ const tableClassName = 'markdown-it-table-copy';
 const clipboardBtnClass = `${tableClassName}-btn`;
 const tableMdValueAttr = `${tableClassName}-value`;
 
-const	clipboard = new Clipboard(`.markdown-it-table-copy-btn`);
-// const	clipboard = new Clipboard(`.${clipboardBtnClass}`, {
-//   target: function (trigger) {
-//     return trigger.previousElementSibling as Element;
-//   },
-//   text: function (trigger) {
-//     return trigger.getAttribute(tableMdValueAttr) ?? 'value';
-//   },
-// });
+const	clipboard = new Clipboard(`.${clipboardBtnClass}`, {
+  text: function (trigger) {
+    const table = trigger.parentElement?.querySelector(`table[${tableMdValueAttr}]`);
+    return table?.getAttribute(tableMdValueAttr) ?? 'not found';
+  },
+});
 
 interface MarkdownItTableCopyOptions {
   onSuccess?: (e: ClipboardJS.Event) => void;
@@ -29,10 +26,6 @@ export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopy
 			clipboard.on("error", options.onError);
 		}
 	}
-
-  // md.renderer.rules.table_open = function (tokens, idx, options, env, self) {
-  //   return `<table class=${tableClassName}>`;
-  // };
 
   // 1) Core Rule:
   //    すべての <table> トークンについて、原文（state.src）の対​応部分を抜き出して
@@ -83,7 +76,7 @@ export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopy
 
   md.renderer.rules.table_close = function (tokens, idx, options, env, self) {
     const buttonHtml = `
-             <button class="${clipboardBtnClass}" data-clipboard-target=".${tableMdValueAttr}">
+             <button class="${clipboardBtnClass}">
                  ${'Copy'}
              </button>`;
     return `${originalTableClose(tokens, idx, options, env, self)}
