@@ -1,6 +1,8 @@
 import MarkdownIt from "markdown-it";
 import Clipboard from "clipboard";
 
+type CopyFormat = 'md' | 'csv';
+
 export interface MarkdownItTableCopyOptions {
   onSuccess?: (e: ClipboardJS.Event) => void;
   onError?: (e: ClipboardJS.Event) => void;
@@ -10,31 +12,75 @@ export interface MarkdownItTableCopyOptions {
 	containerClass?: string;
 	buttonStyle?: string;
 	buttonClass?: string;
-  element?: string;
+  mdCopyElement?: string;
+  csvCopyElement?: string;
 }
 
 const tableClassName = 'markdown-it-table-copy';
 const clipboardBtnClass = `${tableClassName}-btn`;
 const tableMdValueAttr = `${tableClassName}-value`;
+const copyFormatAttr = `${clipboardBtnClass}-format`;
 
 const	clipboard = new Clipboard(`.${clipboardBtnClass}`, {
   text: function (trigger) {
     const table = trigger.parentElement?.querySelector(`table[${tableMdValueAttr}]`);
-    return table?.getAttribute(tableMdValueAttr) ?? 'not found';
+    const mdText = table?.getAttribute(tableMdValueAttr) ?? 'not found';
+    const copyFormat = trigger.getAttribute(copyFormatAttr) as CopyFormat;
+    if (copyFormat === 'csv') {
+      return markdownTableToCsv(mdText);
+    } else {
+      return mdText;
+    }
   },
 });
+
+/**
+ * Markdown テーブル → CSV 変換
+ * @param mdStr  マークダウン表の文字列
+ * @returns   CSV 文字列
+ */
+function markdownTableToCsv(mdStr: string): string {
+  // 1. 行単位に分割して前後の空白を除去
+  const lines: string[] = mdStr.trim().split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+
+  const bodyRows: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    // 2. 2 行目に現れる区切り線（--- や :---: など）をスキップ
+    if (i === 1 && /^[:\-\| ]+$/.test(lines[i])) continue;
+    bodyRows.push(lines[i]);
+  }
+
+  // 3. 各行を CSV に変換
+  return bodyRows
+    .map(row => {
+      // 先頭/末尾のパイプを除き、セルごとに分割
+      const cells: string[] = row.replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+
+      // RFC 4180 に準拠したエスケープ
+      return cells
+        .map(cell => {
+          const escaped = cell.replace(/"/g, '""');
+          return /[,"\r\n]/.test(cell) ? `"${escaped}"` : escaped;
+        })
+        .join(',');
+    })
+    .join('\n');
+}
+
 
 const defaultOptions: MarkdownItTableCopyOptions = {
 	containerStyle: 'display: grid; grid-template: auto;',
 	containerClass: '',
 	buttonStyle: 'justify-self: end; align-self: end; cursor: pointer;',
-	// buttonStyle: 'all: unset; position: absolute; button: -10px; right: 6px;  outline: none; hight: 30px;',
 	buttonClass: '',
-  element: '<span>md</span>'
+  mdCopyElement: '<span>md</span>',
+  csvCopyElement: '<span>csv</span>'
 };
 
 export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopyOptions) {
   options = {
+    copyMd: true,
+    copyCsv: true,
     ...defaultOptions,
     ...options,
   };
@@ -85,18 +131,22 @@ export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopy
       return self.renderToken(tokens, idx, options);
     };
 
-  md.renderer.rules.table_open = function (tokens, idx, mdIdOptions, env, self) {
+  md.renderer.rules.table_open = function (tokens, idx, markdownIdOptions, env, self) {
     return `<div style="${options.containerStyle}" class="${options.containerClass}">
-             ${originalTableOpen(tokens, idx, mdIdOptions, env, self)}`;
+             ${originalTableOpen(tokens, idx, markdownIdOptions, env, self)}`;
   };
 
-  md.renderer.rules.table_close = function (tokens, idx, mdItOptions, env, self) {
-    const buttonHtml = `
-             <button class="${clipboardBtnClass} ${options.buttonClass}" style="${options.buttonStyle}">
-                 ${options.element}
-             </button>`;
-    return `${originalTableClose(tokens, idx, mdItOptions, env, self)}
-      ${buttonHtml}
+  md.renderer.rules.table_close = function (tokens, idx, markdownItOptions, env, self) {
+    const mdCopyBtnHtml = options.copyMd ? `
+             <button class="${clipboardBtnClass} ${options.buttonClass}" style="${options.buttonStyle}" ${copyFormatAttr}="md">
+                 ${options.mdCopyElement}
+             </button>` : '';
+    const csvCopyBtnHtml = options.copyCsv ? `
+             <button class="${clipboardBtnClass} ${options.buttonClass}" style="${options.buttonStyle}" ${copyFormatAttr}="csv">
+                 ${options.csvCopyElement}
+             </button>` : '';
+    return `${originalTableClose(tokens, idx, markdownItOptions, env, self)}
+      ${mdCopyBtnHtml}${csvCopyBtnHtml}
       </div>`;
   };
 }
