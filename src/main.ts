@@ -1,23 +1,21 @@
+import markdownit from 'markdown-it'
+import { markdownitTableCopy } from '../lib/main'
 import './style.css'
-import typescriptLogo from './typescript.svg'
-import { setupCounter } from '../lib/main'
+
+const tableMdText =
+  `| 名前 | 年齢 | 趣味      |
+  |------|------|-----------|
+  | 田中 | 28   | サッカー  |
+  | 鈴木 | 35   | 読書      |
+  | 佐藤 | 22   | ギター    |
+  `
+const md = markdownit()
+md.use(markdownitTableCopy, {});
+const rendered = md.render(tableMdText);
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
+    ${rendered}
   </div>
 `
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
