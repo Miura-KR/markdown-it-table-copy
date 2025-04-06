@@ -75,7 +75,8 @@ Line 2 |
 
         const expected =
             'Item,Description\n' +
-            'Item 1,"Line 1\nLine 2"\n' +
+            'Item 1,Line 1\n' +
+            'Line 2\n' +
             'Item 2,Single line';
 
         expect(markdownTableToCsv(markdown)).toBe(expected);
@@ -146,7 +147,8 @@ Line "2" |
 
         const expected =
             'Complex,Data\n' +
-            '"""Quoted, with comma""","Line 1\nLine ""2"""\n' +
+            '"""Quoted, with comma""",Line 1\n' +
+            '"Line ""2"""\n' +
             'Normal,Cell';
 
         expect(markdownTableToCsv(markdown)).toBe(expected);

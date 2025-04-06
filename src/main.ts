@@ -6,7 +6,7 @@ import './style.css'
 import '@mdi/font/css/materialdesignicons.min.css'
 
 const tableMdText = `
-# Markdown Table
+# Markdown Table Copy
 
 First table
 
