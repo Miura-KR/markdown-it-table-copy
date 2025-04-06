@@ -3,6 +3,9 @@ import Clipboard from "clipboard";
 import { markdownTableToCsv } from "./markdownTableToCsv";
 import { CopyFormat, MarkdownItTableCopyOptions } from "./types";
 
+// 型定義ファイル出力のため再エクスポート
+export * from './types'
+
 const containerClassName = 'markdown-it-table-copy';
 const btnContainerClassName = `${containerClassName}-buttons`;
 const clipboardBtnClassName = `${containerClassName}-btn`;
@@ -76,11 +79,11 @@ export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopy
 
   // 既存の table_open, table_close のレンダリングルールを退避しておく
   const originalTableOpen = md.renderer.rules.table_open ||
-    function (tokens, idx, options, env, self) {
+    function (tokens, idx, options, _env, self) {
       return self.renderToken(tokens, idx, options);
     };
   const originalTableClose = md.renderer.rules.table_close ||
-    function (tokens, idx, options, env, self) {
+    function (tokens, idx, options, _env, self) {
       return self.renderToken(tokens, idx, options);
     };
 

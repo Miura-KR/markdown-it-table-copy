@@ -1,5 +1,6 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig({
   test: {
@@ -8,9 +9,9 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: './lib/main.ts',
+      entry: ['./lib/index.ts'],
       name: 'markdown-it-table-copy',
-      fileName: 'markdown-it-table-copy',
+      fileName: 'index',
     },
     rollupOptions: {
       external: ['markdown-it', '@mdi/font'],
@@ -21,4 +22,8 @@ export default defineConfig({
       },
     },
   },
+  plugins: [dts({
+    include: ['lib/**/*.ts'],
+    exclude: ['lib/markdownTableToCsv.ts'],
+  })]
 })

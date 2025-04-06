@@ -1,9 +1,17 @@
 import markdownit from 'markdown-it'
-// import { markdownitTableCopy, MarkdownItTableCopyOptions } from '../dist/markdown-it-table-copy.js'
-import { markdownitTableCopy } from '../lib/main'
-import { MarkdownItTableCopyOptions } from "../lib/types"
 import './style.css'
 import '@mdi/font/css/materialdesignicons.min.css'
+
+/**
+ * import from develop file
+ * */
+// import { markdownitTableCopy } from '../lib/main'
+// import { MarkdownItTableCopyOptions } from "../lib/types"
+
+/**
+ * import from build file
+ * */
+import { markdownitTableCopy, MarkdownItTableCopyOptions } from '../dist'
 
 const tableMdText = `
 # Markdown Table Copy
