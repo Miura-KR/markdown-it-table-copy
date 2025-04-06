@@ -17,12 +17,14 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build"
+    "build": "tsc && vite build",
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
     "typescript": "~5.7.3",
-    "vite": "^6.1.1"
+    "vite": "^6.1.1",
+    "vitest": "^3.1.1"
   },
   "dependencies": {
     "@mdi/font": "^7.4.47",

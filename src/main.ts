@@ -1,4 +1,5 @@
 import markdownit from 'markdown-it'
+// import { markdownitTableCopy, MarkdownItTableCopyOptions } from '../dist/markdown-it-table-copy.js'
 import { markdownitTableCopy } from '../lib/main'
 import { MarkdownItTableCopyOptions } from "../lib/types"
 import './style.css'
@@ -17,11 +18,10 @@ First table
 
 Second table
 
-| 名前1 | 年齢 | 趣味      |
-|------|------|-----------|
-| 田中 | 28   | サッカー  |
-| 鈴木 | 35   | 読書      |
-| 佐藤 | 22   | ギター    |
+| Item | Description |
+| ---- | ----------- |
+| Item 1 | Line 1 |
+| Item 2 | Single line |
 `
 
 const md = markdownit()
