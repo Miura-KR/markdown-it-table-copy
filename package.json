@@ -21,7 +21,9 @@
     "test": "vitest"
   },
   "devDependencies": {
+    "@types/jsdom": "^21.1.7",
     "@types/markdown-it": "^14.1.2",
+    "jsdom": "^26.0.0",
     "typescript": "~5.7.3",
     "vite": "^6.1.1",
     "vitest": "^3.1.1"
