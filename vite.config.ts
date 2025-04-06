@@ -8,7 +8,7 @@ export default defineConfig({
       fileName: 'markdown-it-table-copy',
     },
     rollupOptions: {
-      external: ['markdown-it'],
+      external: ['markdown-it', '@mdi/font'],
       output: {
         globals: {
           'markdown-it': 'markdownit',

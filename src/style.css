@@ -81,6 +81,24 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+table {
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+th,
+td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+/* 見出し行の文字色を変更 */
+th {
+  color: #000;
+  font-weight: bold;
+  background-color: #f2f2f2;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
