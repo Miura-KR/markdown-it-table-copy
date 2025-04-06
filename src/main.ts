@@ -1,5 +1,6 @@
 import markdownit from 'markdown-it'
-import { markdownitTableCopy, MarkdownItTableCopyOptions } from '../lib/main'
+import { markdownitTableCopy } from '../lib/main'
+import { MarkdownItTableCopyOptions } from "../lib/types"
 import './style.css'
 import '@mdi/font/css/materialdesignicons.min.css'
 
