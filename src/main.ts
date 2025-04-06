@@ -28,6 +28,7 @@ md.use(markdownitTableCopy, {
   mdCopyElement: '<span class="mdi mdi-language-markdown-outline"></span>',
   csvCopyElement: '<span class="mdi mdi-file-delimited-outline"></span>',
 } as MarkdownItTableCopyOptions);
+
 const rendered = md.render(tableMdText);
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `

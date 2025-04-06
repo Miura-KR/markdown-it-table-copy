@@ -134,21 +134,34 @@ export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopy
     };
 
   md.renderer.rules.table_open = function (tokens, idx, markdownIdOptions, env, self) {
-    return `<div style="${options.tableContainerStyle}" class="${containerClassName} ${options.tableContainerClass}">
+    let containerClasses = containerClassName;
+    if (options.tableContainerClass) {
+      containerClasses += ` ${options.tableContainerClass}`;
+    }
+    return `<div style="${options.tableContainerStyle}" class="${containerClasses}">
              ${originalTableOpen(tokens, idx, markdownIdOptions, env, self)}`;
   };
 
   md.renderer.rules.table_close = function (tokens, idx, markdownItOptions, env, self) {
+    let buttonClasses = clipboardBtnClassName;
+    if (options.buttonClass) {
+      buttonClasses += ` ${options.buttonClass}`;
+    }
     const mdCopyBtnHtml = options.copyMd ? `
-             <button class="${clipboardBtnClassName} ${options.buttonClass}" style="${options.buttonStyle}" ${copyFormatAttr}="md">
+             <button class="${buttonClasses}" style="${options.buttonStyle}" ${copyFormatAttr}="md">
                  ${options.mdCopyElement}
              </button>` : '';
     const csvCopyBtnHtml = options.copyCsv ? `
-             <button class="${clipboardBtnClassName} ${options.buttonClass}" style="${options.buttonStyle}" ${copyFormatAttr}="csv">
+             <button class="${buttonClasses}" style="${options.buttonStyle}" ${copyFormatAttr}="csv">
                  ${options.csvCopyElement}
              </button>` : '';
+
+    let buttonContainerClasses = btnContainerClassName;
+    if (options.buttonContainerClass) {
+      buttonContainerClasses += ` ${options.buttonContainerClass}`;
+    }
     return `${originalTableClose(tokens, idx, markdownItOptions, env, self)}
-        <div style="${options.buttonContainerStyle}" class="${btnContainerClassName} ${options.buttonContainerClass}">
+        <div style="${options.buttonContainerStyle}" class="${buttonContainerClasses}">
           ${mdCopyBtnHtml}${csvCopyBtnHtml}
         </div>
       </div>`;
