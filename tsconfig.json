@@ -21,5 +21,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["lib"],
+  "exclude": ["lib/markdownTableToCsv.ts"]
 }

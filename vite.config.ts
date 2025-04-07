@@ -13,17 +13,6 @@ export default defineConfig({
       name: 'markdown-it-table-copy',
       fileName: 'index',
     },
-    rollupOptions: {
-      external: ['markdown-it', '@mdi/font'],
-      output: {
-        globals: {
-          'markdown-it': 'markdownit',
-        },
-      },
-    },
   },
-  plugins: [dts({
-    include: ['lib/**/*.ts'],
-    exclude: ['lib/markdownTableToCsv.ts'],
-  })]
+  plugins: [dts()]
 })

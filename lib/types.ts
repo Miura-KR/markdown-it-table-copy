@@ -7,10 +7,10 @@ export interface MarkdownItTableCopyOptions {
   copyCsv?: boolean;
   tableContainerStyle?: string;
   tableContainerClass?: string;
-  buttonContainerStyle?: string;
-  buttonContainerClass?: string;
-  buttonStyle?: string;
-  buttonClass?: string;
-  mdCopyElement?: string;
-  csvCopyElement?: string;
+  btnContainerStyle?: string;
+  btnContainerClass?: string;
+  btnStyle?: string;
+  btnClass?: string;
+  mdCopyBtnElement?: string;
+  csvCopyBtnElement?: string;
 }
