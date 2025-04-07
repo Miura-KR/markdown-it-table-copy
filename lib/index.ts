@@ -56,7 +56,7 @@ export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopy
     const tokenTypeOpen = 'table_open';
     const tokenTypeClose = 'table_close';
 
-    const table_tokens = tokens.filter((token) => [tokenTypeOpen, tokenTypeClose].includes(token.type))
+    const table_tokens = tokens.filter((token) => [tokenTypeOpen, tokenTypeClose].includes(token.type));
     table_tokens
       // open, closeが閉じている要素に絞り込み
       .filter((token, idx) => token.type === tokenTypeOpen
