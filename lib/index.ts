@@ -12,7 +12,7 @@ const copyBtnClassName = `${containerClassName}-btn`;
 const tableMdValueAttr = `${containerClassName}-value`;
 const copyFormatAttr = `${containerClassName}-format`;
 
-const	clipboard = new Clipboard(`.${copyBtnClassName}`, {
+const clipboard = new Clipboard(`.${copyBtnClassName}`, {
   text: function (trigger) {
     const table = trigger.closest(`.${containerClassName}`)?.querySelector(`table[${tableMdValueAttr}]`);
     const mdText = table?.getAttribute(tableMdValueAttr) ?? 'not found';
@@ -25,12 +25,12 @@ const	clipboard = new Clipboard(`.${copyBtnClassName}`, {
 const defaultOptions: MarkdownItTableCopyOptions = {
   copyMd: true,
   copyCsv: true,
-	tableContainerStyle: 'display: grid; grid-template: auto;',
-	tableContainerClass: '',
-	btnContainerStyle: 'justify-self: end; align-self: end;',
-	btnContainerClass: '',
-	btnStyle: 'cursor: pointer;',
-	btnClass: '',
+  tableContainerStyle: 'display: grid; grid-template: auto;',
+  tableContainerClass: '',
+  btnContainerStyle: 'justify-self: end; align-self: end;',
+  btnContainerClass: '',
+  btnStyle: 'cursor: pointer;',
+  btnClass: '',
   mdCopyBtnElement: '<span>md</span>',
   csvCopyBtnElement: '<span>csv</span>'
 };
@@ -41,14 +41,12 @@ export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopy
     ...options,
   };
 
-  if (clipboard) {
-		if (options.onSuccess) {
-			clipboard.on("success", options.onSuccess);
-		}
-		if (options.onError) {
-			clipboard.on("error", options.onError);
-		}
-	}
+  if (options.onSuccess) {
+    clipboard.on("success", options.onSuccess);
+  }
+  if (options.onError) {
+    clipboard.on("error", options.onError);
+  }
 
   md.core.ruler.push('table_source_extractor', function (state) {
     const tokens = state.tokens;
@@ -62,7 +60,7 @@ export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopy
       .filter((token, idx) => token.type === tokenTypeOpen
         && table_tokens.length > idx + 1
         && table_tokens[idx + 1].type === tokenTypeClose)
-      .filter((openToken) => openToken.map && openToken.map.length > 0)
+      .filter((openToken) => openToken.map)
       .forEach((openToken) => {
         if (!openToken.map) return;
         // トークンが持つ map は [開始行, 終了行+1] の配列
@@ -78,11 +76,11 @@ export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopy
   });
 
   // 既存の table_open, table_close のレンダリングルールを退避しておく
-  const originalTableOpen = md.renderer.rules.table_open ||
+  const originalTableOpen = md.renderer.rules.table_open ??
     function (tokens, idx, options, _env, self) {
       return self.renderToken(tokens, idx, options);
     };
-  const originalTableClose = md.renderer.rules.table_close ||
+  const originalTableClose = md.renderer.rules.table_close ??
     function (tokens, idx, options, _env, self) {
       return self.renderToken(tokens, idx, options);
     };
@@ -92,7 +90,9 @@ export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopy
     if (options.tableContainerClass) {
       containerClasses += ` ${options.tableContainerClass}`;
     }
-    return `<div style="${options.tableContainerStyle}" class="${containerClasses}">
+
+    const style = options.tableContainerStyle ? `style="${options.tableContainerStyle}"` : '';
+    return `<div ${style} class="${containerClasses}">
              ${originalTableOpen(tokens, idx, markdownIdOptions, env, self)}`;
   };
 
@@ -101,21 +101,24 @@ export function markdownitTableCopy(md: MarkdownIt, options: MarkdownItTableCopy
     if (options.btnClass) {
       buttonClasses += ` ${options.btnClass}`;
     }
+    const btnStyle = options.btnStyle ? `style="${options.btnStyle}"` : '';
     const mdCopyBtnHtml = options.copyMd ? `
-             <button class="${buttonClasses}" style="${options.btnStyle}" ${copyFormatAttr}="md">
-                 ${options.mdCopyBtnElement}
+             <button class="${buttonClasses}" ${btnStyle} ${copyFormatAttr}="md">
+                 ${options.mdCopyBtnElement ?? ''}
              </button>` : '';
     const csvCopyBtnHtml = options.copyCsv ? `
-             <button class="${buttonClasses}" style="${options.btnStyle}" ${copyFormatAttr}="csv">
-                 ${options.csvCopyBtnElement}
+             <button class="${buttonClasses}" ${btnStyle} ${copyFormatAttr}="csv">
+                 ${options.csvCopyBtnElement ?? ''}
              </button>` : '';
 
     let buttonContainerClasses = btnContainerClassName;
     if (options.btnContainerClass) {
       buttonContainerClasses += ` ${options.btnContainerClass}`;
     }
+
+    const containerStyle = options.btnContainerStyle ? `style="${options.btnContainerStyle}"` : '';
     return `${originalTableClose(tokens, idx, markdownItOptions, env, self)}
-        <div style="${options.btnContainerStyle}" class="${buttonContainerClasses}">
+        <div ${containerStyle} class="${buttonContainerClasses}">
           ${mdCopyBtnHtml}${csvCopyBtnHtml}
         </div>
       </div>`;

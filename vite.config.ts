@@ -1,6 +1,7 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import checker from 'vite-plugin-checker';
 
 export default defineConfig({
   test: {
@@ -14,5 +15,10 @@ export default defineConfig({
       fileName: 'index',
     },
   },
-  plugins: [dts()]
+  plugins: [
+    dts({
+      include: ['./lib/**/*.ts'],
+      exclude: ['./lib/markdownTableToCsv.ts'],
+    }),
+    checker({ typescript: true })]
 })

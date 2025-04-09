@@ -5,13 +5,12 @@ import '@mdi/font/css/materialdesignicons.min.css'
 /**
  * import from develop file
  * */
-// import { markdownitTableCopy } from '../lib/main'
-// import { MarkdownItTableCopyOptions } from "../lib/types"
+import { markdownitTableCopy, MarkdownItTableCopyOptions } from '../lib'
 
 /**
  * import from build file
  * */
-import { markdownitTableCopy, MarkdownItTableCopyOptions } from '../dist'
+// import { markdownitTableCopy, MarkdownItTableCopyOptions } from '../dist'
 
 const tableMdText = `
 # Markdown Table Copy
@@ -30,9 +29,9 @@ Second table
 | ---- | ----------- |
 | Item 1 | Line 1 |
 | Item 2 | Single line |
-`
+`;
 
-const md = markdownit()
+const md = markdownit();
 md.use(markdownitTableCopy, {
   mdCopyElement: '<span class="mdi mdi-language-markdown-outline"></span>',
   csvCopyElement: '<span class="mdi mdi-file-delimited-outline"></span>',
@@ -40,7 +39,11 @@ md.use(markdownitTableCopy, {
 
 const rendered = md.render(tableMdText);
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
+const appElement = document.querySelector<HTMLDivElement>('#app');
+if (!appElement) {
+  throw new Error('App element not found');
+}
+appElement.innerHTML = `
   <div>
     ${rendered}
   </div>

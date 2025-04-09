@@ -10,7 +10,7 @@ export function markdownTableToCsv(mdStr: string): string {
   const bodyRows: string[] = [];
   for (let i = 0; i < lines.length; i++) {
     // 2. 2 行目に現れる区切り線（--- や :---: など）をスキップ
-    if (i === 1 && /^[:\-\| ]+$/.test(lines[i])) continue;
+    if (i === 1 && /^[:\-| ]+$/.test(lines[i])) continue;
     bodyRows.push(lines[i]);
   }
 
@@ -20,7 +20,7 @@ export function markdownTableToCsv(mdStr: string): string {
       // 先頭/末尾のパイプを除き、セルごとに分割
       const cells: string[] = row.replace(/^\||\|$/g, '').split('|').map(c => c.trim());
 
-      // RFC 4180 に準拠したエスケープ
+      // RFC4180 に準拠したエスケープ
       return cells
         .map(cell => {
           const escaped = cell.replace(/"/g, '""');

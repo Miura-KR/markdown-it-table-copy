@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import MarkdownIt from 'markdown-it';
-import { markdownitTableCopy,  } from '../lib';
+import { markdownitTableCopy, } from '../lib';
 import { MarkdownItTableCopyOptions } from '../lib/types';
 
 describe('markdownitTableCopy', () => {
