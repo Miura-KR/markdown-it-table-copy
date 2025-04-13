@@ -1,7 +1,7 @@
 {
   "name": "markdown-it-table-copy",
   "private": false,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A markdown-it plugin to add a copy icon bottom of the table to copy the table to clipboard.",
   "homepage": "https://github.com/Miura-KR/markdown-it-table-copy",
   "bugs": {
