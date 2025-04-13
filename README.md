@@ -18,10 +18,10 @@ npm install markdown-it-table-copy
 ## Basic Usage
 
 ```javascript
-import MarkdownIt from 'markdown-it';
+import markdownit from 'markdown-it';
 import { markdownitTableCopy } from 'markdown-it-table-copy';
 
-const md = new MarkdownIt();
+const md = markdownit();
 md.use(markdownitTableCopy);
 
 const result = md.render(`
