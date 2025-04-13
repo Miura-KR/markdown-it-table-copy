@@ -13,6 +13,11 @@ import { markdownitTableCopy, MarkdownItTableCopyOptions } from '../lib'
  * */
 // import { markdownitTableCopy, MarkdownItTableCopyOptions } from '../dist'
 
+/**
+ * import from npm package
+ * */
+// import { markdownitTableCopy, MarkdownItTableCopyOptions } from 'markdown-it-table-copy'
+
 const tableMdText = `
 # Markdown Table Copy
 
