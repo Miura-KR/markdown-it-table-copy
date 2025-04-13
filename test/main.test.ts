@@ -13,7 +13,6 @@ describe('markdownitTableCopy', () => {
 `;
 
   beforeEach(() => {
-    // 各テスト前にMarkdownItインスタンスを初期化
     md = new MarkdownIt();
     document.body.innerHTML = '';
   });
@@ -23,10 +22,9 @@ describe('markdownitTableCopy', () => {
   });
 
   it('should register the plugin with default options', () => {
-    // プラグインを登録
     md.use(markdownitTableCopy);
 
-    // プラグインが登録されていることを確認（レンダリングが正常に行われるか）
+    // Confirm that the plugin is registered (check if rendering is performed correctly)
     const rendered = md.render('| test |\n| ---- |');
     expect(rendered).toContain('markdown-it-table-copy');
   });
@@ -36,13 +34,13 @@ describe('markdownitTableCopy', () => {
 
     const rendered = md.render(sampleTable);
 
-    // コンテナが追加されていることを確認
+    // Confirm that the container has been added
     expect(rendered).toContain('<div style="display: grid; grid-template: auto;" class="markdown-it-table-copy">');
 
-    // テーブルにマークダウンソースが追加されていることを確認
+    // Confirm that the markdown source has been added to the table
     expect(rendered).toContain(`<table markdown-it-table-copy-value="${sampleTable.trim()}">`);
 
-    // ボタンが追加されていることを確認
+    // Confirm that the buttons have been added
     expect(rendered).toContain('<div style="justify-self: end; align-self: end;" class="markdown-it-table-copy-buttons">');
     expect(rendered).toContain('<button class="markdown-it-table-copy-btn" markdown-it-table-copy-format="md" >');
     expect(rendered).toContain('<button class="markdown-it-table-copy-btn" markdown-it-table-copy-format="csv" >');
@@ -66,7 +64,7 @@ describe('markdownitTableCopy', () => {
 
     const rendered = md.render(sampleTable);
 
-    // カスタムスタイルとクラスが適用されていることを確認
+    // Confirm that custom styles and classes have been applied
     expect(rendered).toContain(`style="custom-container-style"`);
     expect(rendered).toContain(`class="markdown-it-table-copy custom-container-class"`);
     expect(rendered).toContain(`style="custom-button-container-style"`);
@@ -74,7 +72,7 @@ describe('markdownitTableCopy', () => {
     expect(rendered).toContain(`style="custom-button-style"`);
     expect(rendered).toContain(`class="markdown-it-table-copy-btn custom-button-class"`);
 
-    // カスタムボタン要素が適用されていることを確認
+    // Confirm that custom button elements have been applied
     expect(rendered).toContain('<span>Copy MD</span>');
     expect(rendered).toContain('<span>Copy CSV</span>');
   });
@@ -87,7 +85,7 @@ describe('markdownitTableCopy', () => {
 
     const rendered = md.render(sampleTable);
 
-    // mdボタンのみが存在することを確認
+    // Confirm that only the md button exists
     expect(rendered).toContain('markdown-it-table-copy-format="md"');
     expect(rendered).not.toContain('markdown-it-table-copy-format="csv"');
   });
@@ -100,7 +98,7 @@ describe('markdownitTableCopy', () => {
 
     const rendered = md.render(sampleTable);
 
-    // csvボタンのみが存在することを確認
+    // Confirm that only the csv button exists
     expect(rendered).not.toContain('markdown-it-table-copy-format="md"');
     expect(rendered).toContain('markdown-it-table-copy-format="csv"');
   });

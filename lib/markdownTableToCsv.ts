@@ -1,26 +1,26 @@
 /**
- * Markdown テーブル → CSV 変換
- * @param mdStr  マークダウン表の文字列
- * @returns   CSV 文字列
+ * Convert Markdown table to CSV
+ * @param mdStr  Markdown table string
+ * @returns   CSV string
  */
 export function markdownTableToCsv(mdStr: string): string {
-  // 1. 行単位に分割して前後の空白を除去
+  // 1. Split by line and remove whitespace before and after
   const lines: string[] = mdStr.trim().split(/\r?\n/).map(l => l.trim()).filter(Boolean);
 
   const bodyRows: string[] = [];
   for (let i = 0; i < lines.length; i++) {
-    // 2. 2 行目に現れる区切り線（--- や :---: など）をスキップ
+    // 2. Skip the separator line (---, :---:, etc.) that appears on the second line
     if (i === 1 && /^[:\-| ]+$/.test(lines[i])) continue;
     bodyRows.push(lines[i]);
   }
 
-  // 3. 各行を CSV に変換
+  // 3. Convert each row to CSV
   return bodyRows
     .map(row => {
-      // 先頭/末尾のパイプを除き、セルごとに分割
+      // Remove leading/trailing pipes and split by cell
       const cells: string[] = row.replace(/^\||\|$/g, '').split('|').map(c => c.trim());
 
-      // RFC4180 に準拠したエスケープ
+      // RFC4180-compliant escaping
       return cells
         .map(cell => {
           const escaped = cell.replace(/"/g, '""');
