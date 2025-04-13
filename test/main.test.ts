@@ -44,8 +44,8 @@ describe('markdownitTableCopy', () => {
 
     // ボタンが追加されていることを確認
     expect(rendered).toContain('<div style="justify-self: end; align-self: end;" class="markdown-it-table-copy-buttons">');
-    expect(rendered).toContain('<button class="markdown-it-table-copy-btn" style="cursor: pointer;" markdown-it-table-copy-format="md">');
-    expect(rendered).toContain('<button class="markdown-it-table-copy-btn" style="cursor: pointer;" markdown-it-table-copy-format="csv">');
+    expect(rendered).toContain('<button class="markdown-it-table-copy-btn" markdown-it-table-copy-format="md" >');
+    expect(rendered).toContain('<button class="markdown-it-table-copy-btn" markdown-it-table-copy-format="csv" >');
   });
 
   it('should apply custom options', () => {

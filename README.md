@@ -42,7 +42,7 @@ md.use(markdownitTableCopy, {
   // Copy functionality settings
   copyMd: true,                // Show markdown format copy button (default: true)
   copyCsv: true,               // Show CSV format copy button (default: true)
-  
+
   // Style settings
   tableContainerStyle: 'display: grid; grid-template: auto;', // Table container style
   tableContainerClass: '',     // Additional class for table container
@@ -50,11 +50,11 @@ md.use(markdownitTableCopy, {
   btnContainerClass: '',       // Additional class for button container
   btnStyle: 'cursor: pointer;', // Button style
   btnClass: '',                // Additional class for buttons
-  
+
   // Button element customization
   mdCopyBtnElement: '<span>md</span>',   // Markdown copy button content
   csvCopyBtnElement: '<span>csv</span>', // CSV copy button content
-  
+
   // Callback functions
   onSuccess: (e) => {          // Callback on copy success
     console.log('Copy success:', e);
@@ -81,13 +81,6 @@ md.use(markdownitTableCopy, {
 screenshot:
 
 ![screenshot](./screenshot.png)
-
-## CSV Conversion
-
-The conversion from markdown table to CSV follows these rules:
-
-- The separator row (e.g., `---|---` in the second row) is excluded
-- Commas, quotes, and line breaks within cells are escaped according to RFC4180
 
 ## License
 
