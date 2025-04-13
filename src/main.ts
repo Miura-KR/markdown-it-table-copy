@@ -9,6 +9,7 @@ import { markdownitTableCopy, MarkdownItTableCopyOptions } from '../lib'
 
 /**
  * import from build file
+ * You have to execute `npm run build` before using this import.
  * */
 // import { markdownitTableCopy, MarkdownItTableCopyOptions } from '../dist'
 
@@ -33,8 +34,8 @@ Second table
 
 const md = markdownit();
 md.use(markdownitTableCopy, {
-  mdCopyElement: '<span class="mdi mdi-language-markdown-outline"></span>',
-  csvCopyElement: '<span class="mdi mdi-file-delimited-outline"></span>',
+  mdCopyBtnElement: '<span class="mdi mdi-language-markdown-outline"></span>',
+  csvCopyBtnElement: '<span class="mdi mdi-file-delimited-outline"></span>',
 } as MarkdownItTableCopyOptions);
 
 const rendered = md.render(tableMdText);
