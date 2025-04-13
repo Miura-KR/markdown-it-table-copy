@@ -48,7 +48,7 @@ md.use(markdownitTableCopy, {
   tableContainerClass: '',     // Additional class for table container
   btnContainerStyle: 'justify-self: end; align-self: end;',   // Button container style
   btnContainerClass: '',       // Additional class for button container
-  btnStyle: 'cursor: pointer;', // Button style
+  btnStyle: '', // Button style
   btnClass: '',                // Additional class for buttons
 
   // Button element customization
