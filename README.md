@@ -1,5 +1,7 @@
 # markdown-it-table-copy
 
+[![npm version](https://badge.fury.io/js/markdown-it-table-copy.svg)](https://badge.fury.io/js/markdown-it-table-copy) [![](https://data.jsdelivr.com/v1/package/npm/markdown-it-table-copy/badge)](https://www.jsdelivr.com/package/npm/markdown-it-table-copy) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 A markdown-it plugin that adds copy buttons to markdown tables, allowing you to copy tables in either markdown or CSV format.
 
 ## Features
@@ -11,9 +13,15 @@ A markdown-it plugin that adds copy buttons to markdown tables, allowing you to 
 
 ## Installation
 
+**node.js:**
+
 ```bash
 npm install markdown-it-table-copy
 ```
+
+**browser (CDN):**
+
+[jsDeriver](https://www.jsdelivr.com/package/npm/markdown-it-table-copy)
 
 ## Basic Usage
 
