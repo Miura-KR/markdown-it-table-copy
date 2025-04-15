@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import MarkdownIt from 'markdown-it';
 import { markdownitTableCopy, } from '../lib';
 import { MarkdownItTableCopyOptions } from '../lib/types';
@@ -14,11 +14,6 @@ describe('markdownitTableCopy', () => {
 
   beforeEach(() => {
     md = new MarkdownIt();
-    document.body.innerHTML = '';
-  });
-
-  afterEach(() => {
-    vi.clearAllMocks();
   });
 
   it('should register the plugin with default options', () => {
