@@ -33,8 +33,8 @@
     }
   },
   "scripts": {
-    "dev": "vite",
-    "build": "npm run lint && vite build",
+    "dev": "bunx --bun vite",
+    "build": "bun run lint && bunx --bun vite build",
     "test": "vitest",
     "lint": "eslint lib/**/*.ts src/**/*.ts test/**/*.ts"
   },
@@ -46,7 +46,7 @@
     "eslint": "^9.24.0",
     "jsdom": "^26.0.0",
     "markdown-it": "^14.1.0",
-    "markdown-it-table-copy": "^1.0.0",
+    "markdown-it-table-copy": "^1.0.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.29.0",
     "vite": "^7.0.0",
